@@ -56,8 +56,8 @@ func claim_points{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     # Calculating the sum of the array sent by the user
     let (array_sum) = get_sum_internal(array_len, array)
 
-    # The sum should be higher than 50
-    assert_le ( 50, array_sum)
+    # The sum should be at least 50
+    assert_le(50, array_sum)
     # Reading caller address
     let (sender_address) = get_caller_address()
     # Checking if the user has validated the exercice before
@@ -84,7 +84,7 @@ func get_sum_internal{ range_check_ptr}(length : felt, array : felt*) -> (sum : 
     # If length is NOT zero, then the function calls itself again, by moving forward one slot
     let (current_sum) = get_sum_internal(length=length - 1, array=array + 1)
 
-    # This part of the function is first reached when length=0.
+    # This part of the function is first reached when length=1.
     # Checking that the first value in the array ([array]) is not 0
     assert_not_zero([array])
     # The sum begins
